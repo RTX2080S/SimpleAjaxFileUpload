@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Ajax FileUpload Demo</title>
+    <script src="Scripts/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <label for="fileUpload">
+                        Select File to Upload:
+                    </label>
+                    <input id="fileUpload" type="file" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="btnUploadFile" type="button" value="Upload File" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('#btnUploadFile').click(function () {
+
+                var data = new FormData();
+
+                var files = $("#fileUpload").get(0).files;
+
+                // Add the uploaded image content to the form data collection
+                if (files.length > 0) {
+                    data.append("UploadedImage", files[0]);
+                }
+
+                // Make Ajax request with the contentType = false, and processData = false
+                var ajaxRequest = $.ajax({
+                    type: "POST",
+                    url: "/api/fileupload/uploadfile",
+                    contentType: false,
+                    processData: false,
+                    data: data
+                });
+
+                ajaxRequest.done(function (xhr, textStatus) {
+                    alert('Done! ');
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>
